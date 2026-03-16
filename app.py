@@ -4,7 +4,8 @@ from dashboards.student import student_dashboard
 from dashboards.faculty import faculty_dashboard
 from dashboards.analytics import analytics_dashboard
 from auth.auth import login, create_default_users
-
+from database.db import init_db
+init_db()
 create_default_users()
 
 st.sidebar.title("Idea Vault AI")
