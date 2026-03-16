@@ -1,7 +1,6 @@
-
 import bcrypt
-from database.db import read, write
 import pandas as pd
+from database.db import read, write
 
 def hash_pw(pw):
     return bcrypt.hashpw(pw.encode(), bcrypt.gensalt())
@@ -9,23 +8,18 @@ def hash_pw(pw):
 def verify_pw(pw, hashed):
     return bcrypt.checkpw(pw.encode(), hashed)
 
-def create_default_users():
-    try:
-        read("SELECT * FROM users")
-    except:
-        df = pd.DataFrame([
-            ["student1", hash_pw("student123"), "student"],
-            ["faculty1", hash_pw("faculty123"), "faculty"]
-        ], columns=["username","password","role"])
-        write(df,"users")
+def register_student(username,password,email):
 
-def login(username,password):
     df = read("SELECT * FROM users")
-    user = df[df["username"]==username]
-    if len(user)==0:
-        return None
-    hashed = user.iloc[0]["password"]
-    role = user.iloc[0]["role"]
-    if verify_pw(password, hashed):
-        return role
-    return None
+
+    if username in df["username"].values:
+        return False
+
+    new_user = pd.DataFrame(
+        [[username,hash_pw(password),email,"student"]],
+        columns=["username","password","email","role"]
+    )
+
+    write(new_user,"users")
+
+    return True
