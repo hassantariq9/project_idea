@@ -23,3 +23,19 @@ def register_student(username,password,email):
     write(new_user,"users")
 
     return True
+
+def change_password(username,new_pw):
+
+    from database.db import engine
+    import sqlalchemy as sa
+
+    hashed = hash_pw(new_pw)
+
+    with engine.begin() as conn:
+
+        conn.execute(
+            sa.text(
+            "UPDATE users SET password=:pw WHERE username=:u"
+            ),
+            {"pw":hashed,"u":username}
+        )
