@@ -1,0 +1,10 @@
+
+streamlit
+pandas
+numpy
+sentence-transformers
+scikit-learn
+plotly
+bcrypt
+sqlalchemy
+networkx

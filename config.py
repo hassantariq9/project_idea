@@ -1,0 +1,4 @@
+
+DATABASE_URL = "sqlite:///ideas.db"
+SIMILARITY_THRESHOLD = 0.82
+CLUSTERS = 6
