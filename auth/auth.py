@@ -39,3 +39,17 @@ def change_password(username,new_pw):
             ),
             {"pw":hashed,"u":username}
         )
+def create_default_admin():
+
+    df = read("SELECT * FROM users")
+
+    if "admin" not in df["username"].values:
+
+        import pandas as pd
+
+        admin = pd.DataFrame(
+            [["admin",hash_pw("admin123"),"admin@system","admin"]],
+            columns=["username","password","email","role"]
+        )
+
+        write(admin,"users")
