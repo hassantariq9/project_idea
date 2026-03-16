@@ -29,5 +29,29 @@ if "role" in st.session_state:
     elif st.session_state["role"]=="faculty":
         faculty_dashboard()
 
+menu = st.sidebar.selectbox(
+"Menu",
+["Login","Sign Up","Analytics"]
+)
+
+from auth.auth import register_student
+
+if menu == "Sign Up":
+
+    st.title("Student Registration")
+
+    username = st.text_input("Username")
+    email = st.text_input("Email")
+    password = st.text_input("Password",type="password")
+
+    if st.button("Create Account"):
+
+        success = register_student(username,password,email)
+
+        if success:
+            st.success("Account created. You can login now.")
+        else:
+            st.error("Username already exists")
+
 if menu=="Analytics":
     analytics_dashboard()
