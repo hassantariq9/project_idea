@@ -53,5 +53,9 @@ if menu == "Sign Up":
         else:
             st.error("Username already exists")
 
+if st.session_state["role"]=="admin":
+    from dashboards.admin import admin_dashboard
+    admin_dashboard()
+
 if menu=="Analytics":
     analytics_dashboard()
